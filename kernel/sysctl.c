@@ -142,7 +142,9 @@ extern int sched_interactive;
 extern int sched_iso_cpu;
 extern int sched_yield_type;
 #endif
-#ifdef CONFIG_PRINTK
+extern int hrtimer_granularity_us;
+extern int hrtimeout_min_us;
+#if defined(CONFIG_PRINTK) || defined(CONFIG_SCHED_MUQSS)
 static int ten_thousand __read_only = 10000;
 #endif
 #ifdef CONFIG_PERF_EVENTS
@@ -312,19 +314,11 @@ static struct ctl_table sysctl_base_table[] = {
 	{ }
 };
 
-<<<<<<< HEAD
-#ifdef CONFIG_SCHED_DEBUG
-static int min_sched_granularity_ns __read_only = 100000;		/* 100 usecs */
-static int max_sched_granularity_ns __read_only = NSEC_PER_SEC;	/* 1 second */
-static int min_wakeup_granularity_ns __read_only;			/* 0 usecs */
-static int max_wakeup_granularity_ns __read_only = NSEC_PER_SEC;	/* 1 second */
-=======
 #if defined(CONFIG_SCHED_DEBUG) && !defined(CONFIG_SCHED_MUQSS)
 static int min_sched_granularity_ns = 100000;		/* 100 usecs */
 static int max_sched_granularity_ns = NSEC_PER_SEC;	/* 1 second */
 static int min_wakeup_granularity_ns;			/* 0 usecs */
 static int max_wakeup_granularity_ns = NSEC_PER_SEC;	/* 1 second */
->>>>>>> MultiQueue Skiplist Scheduler version v0.180.
 #ifdef CONFIG_SMP
 static int min_sched_tunable_scaling __read_only = SCHED_TUNABLESCALING_NONE;
 static int max_sched_tunable_scaling __read_only = SCHED_TUNABLESCALING_END-1;
@@ -1136,6 +1130,24 @@ static struct ctl_table kern_table[] = {
 		.extra2		= &two,
 	},
 #endif
+	{
+		.procname	= "hrtimer_granularity_us",
+		.data		= &hrtimer_granularity_us,
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= &proc_dointvec_minmax,
+		.extra1		= &one,
+		.extra2		= &ten_thousand,
+	},
+	{
+		.procname	= "hrtimeout_min_us",
+		.data		= &hrtimeout_min_us,
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= &proc_dointvec_minmax,
+		.extra1		= &one,
+		.extra2		= &ten_thousand,
+	},
 #if defined(CONFIG_S390) && defined(CONFIG_SMP)
 	{
 		.procname	= "spin_retry",
