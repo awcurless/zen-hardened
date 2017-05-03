@@ -126,13 +126,7 @@ static inline int kmem_cache_debug(struct kmem_cache *s)
 
 static inline bool has_sanitize(struct kmem_cache *s)
 {
-	return IS_ENABLED(CONFIG_SLAB_SANITIZE) &&
-	       !(s->flags & (SLAB_TYPESAFE_BY_RCU | SLAB_POISON));
-}
-
-static inline bool has_sanitize_verify(struct kmem_cache *s)
-{
-	return IS_ENABLED(CONFIG_SLAB_SANITIZE_VERIFY) && has_sanitize(s);
+	return IS_ENABLED(CONFIG_SLAB_SANITIZE) && !(s->flags & (SLAB_TYPESAFE_BY_RCU | SLAB_POISON));
 }
 
 void *fixup_red_left(struct kmem_cache *s, void *p)
@@ -3043,22 +3037,15 @@ static __always_inline void do_slab_free(struct kmem_cache *s,
 	void *tail_obj = tail ?: head;
 	struct kmem_cache_cpu *c;
 	unsigned long tid;
-	bool sanitize = has_sanitize(s);
 
-	if (IS_ENABLED(CONFIG_SLAB_CANARY) || sanitize) {
-		__maybe_unused int offset = s->offset ? 0 : sizeof(void *);
+	if (has_sanitize(s)) {
+		int offset = s->offset ? 0 : sizeof(void *);
 		void *x = head;
 
 		while (1) {
-			check_canary(s, x, s->random_active);
-			set_canary(s, x, s->random_inactive);
-
-			if (sanitize) {
-				memset(x + offset, 0, s->object_size - offset);
-				if (!IS_ENABLED(CONFIG_SLAB_SANITIZE_VERIFY) &&
-				    s->ctor)
-					s->ctor(x);
-			}
+			memset(x + offset, 0, s->object_size - offset);
+			if (s->ctor)
+				s->ctor(x);
 			if (x == tail_obj)
 				break;
 			x = get_freepointer(s, x);
