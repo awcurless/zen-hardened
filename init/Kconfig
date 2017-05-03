@@ -1844,6 +1844,8 @@ config SLAB_SANITIZE_VERIFY
 	  Verify that newly allocated slab allocations are zeroed to detect
 	  write-after-free bugs.
 
+=======
+>>>>>>> slub: add basic full slab sanitization
 config SLUB_CPU_PARTIAL
 	default y
 	depends on SLUB && SMP
