@@ -340,21 +340,18 @@ static inline unsigned long *get_canary(struct kmem_cache *s, void *object)
 	return object + s->inuse;
 }
 
-static inline unsigned long get_canary_value(const void *canary,
-					     unsigned long value)
+static inline unsigned long get_canary_value(const void *canary, unsigned long value)
 {
 	return (value ^ (unsigned long)canary) & CANARY_MASK;
 }
 
-static inline void set_canary(struct kmem_cache *s, void *object,
-			      unsigned long value)
+static inline void set_canary(struct kmem_cache *s, void *object, unsigned long value)
 {
 	unsigned long *canary = get_canary(s, object);
 	*canary = get_canary_value(canary, value);
 }
 
-static inline void check_canary(struct kmem_cache *s, void *object,
-				unsigned long value)
+static inline void check_canary(struct kmem_cache *s, void *object, unsigned long value)
 {
 	unsigned long *canary = get_canary(s, object);
 	BUG_ON(*canary != get_canary_value(canary, value));
@@ -3063,8 +3060,12 @@ static __always_inline void do_slab_free(struct kmem_cache *s,
 
 			if (sanitize) {
 				memset(x + offset, 0, s->object_size - offset);
+<<<<<<< HEAD
 				if (!IS_ENABLED(CONFIG_SLAB_SANITIZE_VERIFY) &&
 				    s->ctor)
+=======
+				if (!IS_ENABLED(CONFIG_SLAB_SANITIZE_VERIFY) && s->ctor)
+>>>>>>> slub: add multi-purpose random canaries
 					s->ctor(x);
 			}
 			if (x == tail_obj)
