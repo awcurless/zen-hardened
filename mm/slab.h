@@ -453,11 +453,18 @@ static inline struct kmem_cache *cache_from_obj(struct kmem_cache *s, void *x)
 	    !unlikely(s->flags & SLAB_CONSISTENCY_CHECKS))
 		return s;
 
-	cachep = virt_to_cache(x);
-	WARN_ONCE(cachep && !slab_equal_or_root(cachep, s),
-		  "%s: Wrong slab cache. %s but object is from %s\n",
-		  __func__, s->name, cachep->name);
-	return cachep;
+	page = virt_to_head_page(x);
+#ifdef CONFIG_SLAB_HARDENED
+	BUG_ON(!PageSlab(page));
+#endif
+	cachep = page->slab_cache;
+	if (slab_equal_or_root(cachep, s))
+		return cachep;
+
+	pr_err("%s: Wrong slab cache. %s but object is from %s\n",
+	       __func__, s->name, cachep->name);
+	WARN_ON_ONCE(1);
+	return s;
 }
 
 static inline size_t slab_ksize(const struct kmem_cache *s)
