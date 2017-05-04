@@ -129,6 +129,11 @@ static inline bool has_sanitize(struct kmem_cache *s)
 	return IS_ENABLED(CONFIG_SLAB_SANITIZE) && !(s->flags & (SLAB_TYPESAFE_BY_RCU | SLAB_POISON));
 }
 
+static inline bool has_sanitize_verify(struct kmem_cache *s)
+{
+	return IS_ENABLED(CONFIG_SLAB_SANITIZE_VERIFY) && has_sanitize(s);
+}
+
 void *fixup_red_left(struct kmem_cache *s, void *p)
 {
 	if (kmem_cache_debug(s) && s->flags & SLAB_RED_ZONE)
@@ -3044,7 +3049,7 @@ static __always_inline void do_slab_free(struct kmem_cache *s,
 
 		while (1) {
 			memset(x + offset, 0, s->object_size - offset);
-			if (s->ctor)
+			if (!IS_ENABLED(CONFIG_SLAB_SANITIZE_VERIFY) && s->ctor)
 				s->ctor(x);
 			if (x == tail_obj)
 				break;
