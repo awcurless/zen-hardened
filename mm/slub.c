@@ -135,6 +135,11 @@ static inline bool has_sanitize_verify(struct kmem_cache *s)
 	return IS_ENABLED(CONFIG_SLAB_SANITIZE_VERIFY) && has_sanitize(s);
 }
 
+static inline bool has_sanitize_verify(struct kmem_cache *s)
+{
+	return IS_ENABLED(CONFIG_SLAB_SANITIZE_VERIFY) && has_sanitize(s);
+}
+
 void *fixup_red_left(struct kmem_cache *s, void *p)
 {
 	if (kmem_cache_debug(s) && s->flags & SLAB_RED_ZONE)
@@ -3046,7 +3051,6 @@ static __always_inline void do_slab_free(struct kmem_cache *s,
 	void *tail_obj = tail ?: head;
 	struct kmem_cache_cpu *c;
 	unsigned long tid;
-<<<<<<< HEAD
 	bool sanitize = has_sanitize(s);
 
 	if (IS_ENABLED(CONFIG_SLAB_CANARY) || sanitize) {
@@ -3063,17 +3067,6 @@ static __always_inline void do_slab_free(struct kmem_cache *s,
 				    s->ctor)
 					s->ctor(x);
 			}
-=======
-
-	if (has_sanitize(s)) {
-		int offset = s->offset ? 0 : sizeof(void *);
-		void *x = head;
-
-		while (1) {
-			memset(x + offset, 0, s->object_size - offset);
-			if (s->ctor)
-				s->ctor(x);
->>>>>>> slub: add basic full slab sanitization
 			if (x == tail_obj)
 				break;
 			x = get_freepointer(s, x);
@@ -3296,8 +3289,7 @@ int kmem_cache_alloc_bulk(struct kmem_cache *s, gfp_t flags, size_t size,
 
 		for (j = 0; j < i; j++) {
 			size_t offset = s->offset ? 0 : sizeof(void *);
-			BUG_ON(memchr_inv(p[j] + offset, 0,
-					  s->object_size - offset));
+			BUG_ON(memchr_inv(p[j] + offset, 0, s->object_size - offset));
 			if (s->ctor)
 				s->ctor(p[j]);
 			if (unlikely(flags & __GFP_ZERO) && offset)
