@@ -444,6 +444,7 @@ static __always_inline void uncharge_slab_page(struct page *page, int order,
 static inline struct kmem_cache *cache_from_obj(struct kmem_cache *s, void *x)
 {
 	struct kmem_cache *cachep;
+    struct page *page;
 
 	/*
 	 * When kmemcg is not being used, both assignments should return the
