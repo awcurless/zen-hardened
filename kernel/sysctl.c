@@ -320,14 +320,13 @@ static struct ctl_table sysctl_base_table[] = { {
 						},
 						{} };
 
-
 #if defined(CONFIG_SCHED_DEBUG) && !defined(CONFIG_SCHED_MUQSS)
 static int min_sched_granularity_ns __read_only = 100000; /* 100 usecs */
 static int max_sched_granularity_ns __read_only = NSEC_PER_SEC; /* 1 second */
 static int min_wakeup_granularity_ns __read_only; /* 0 usecs */
 static int max_wakeup_granularity_ns __read_only = NSEC_PER_SEC; /* 1 second */
 #ifdef CONFIG_SMP static int min_sched_tunable_scaling __read_only =
-	SCHED_TUNABLESCALING_NONE;
+SCHED_TUNABLESCALING_NONE;
 static int max_sched_tunable_scaling __read_only = SCHED_TUNABLESCALING_END - 1;
 #endif /* CONFIG_SMP */
 #endif /* CONFIG_SCHED_DEBUG */
@@ -553,11 +552,11 @@ static struct ctl_table kern_table[] = {
 #endif
 #ifdef CONFIG_USER_NS
 	{
-		.procname	= "unprivileged_userns_clone",
-		.data		= &unprivileged_userns_clone,
-		.maxlen		= sizeof(int),
-		.mode		= 0644,
-		.proc_handler	= proc_dointvec,
+		.procname = "unprivileged_userns_clone",
+		.data = &unprivileged_userns_clone,
+		.maxlen = sizeof(int),
+		.mode = 0644,
+		.proc_handler = proc_dointvec,
 	},
 #endif
 #ifdef CONFIG_PROC_SYSCTL
@@ -917,42 +916,42 @@ static struct ctl_table kern_table[] = {
 	},
 #endif
 #if defined CONFIG_TTY
-	  {
-		.procname	= "tiocsti_restrict",
-		.data		= &tiocsti_restrict,
-		.maxlen		= sizeof(int),
-		.mode		= 0644,
-		.proc_handler	= proc_dointvec_minmax_sysadmin,
-		.extra1		= &zero,
-		.extra2		= &one,
-	  },
+	{
+		.procname = "tiocsti_restrict",
+		.data = &tiocsti_restrict,
+		.maxlen = sizeof(int),
+		.mode = 0644,
+		.proc_handler = proc_dointvec_minmax_sysadmin,
+		.extra1 = &zero,
+		.extra2 = &one,
+	},
 #endif
 	{
-		.procname	= "device_sidechannel_restrict",
-		.data		= &device_sidechannel_restrict,
-		.maxlen		= sizeof(int),
-		.mode		= 0644,
-		.proc_handler	= proc_dointvec_minmax_sysadmin,
-		.extra1		= &zero,
-		.extra2		= &one,
+		.procname = "device_sidechannel_restrict",
+		.data = &device_sidechannel_restrict,
+		.maxlen = sizeof(int),
+		.mode = 0644,
+		.proc_handler = proc_dointvec_minmax_sysadmin,
+		.extra1 = &zero,
+		.extra2 = &one,
 	},
 #if IS_ENABLED(CONFIG_USB)
 	{
-		.procname	= "deny_new_usb",
-		.data		= &deny_new_usb,
-		.maxlen		= sizeof(int),
-		.mode		= 0644,
-		.proc_handler	= proc_dointvec_minmax_sysadmin,
-		.extra1		= &zero,
-		.extra2		= &one,
+		.procname = "deny_new_usb",
+		.data = &deny_new_usb,
+		.maxlen = sizeof(int),
+		.mode = 0644,
+		.proc_handler = proc_dointvec_minmax_sysadmin,
+		.extra1 = &zero,
+		.extra2 = &one,
 	},
 #endif
 	{
-		.procname	= "ngroups_max",
-		.data		= &ngroups_max,
-		.maxlen		= sizeof (int),
-		.mode		= 0444,
-		.proc_handler	= proc_dointvec,
+		.procname = "ngroups_max",
+		.data = &ngroups_max,
+		.maxlen = sizeof(int),
+		.mode = 0444,
+		.proc_handler = proc_dointvec,
 	},
 	{
 		.procname = "cap_last_cap",
@@ -2705,11 +2704,11 @@ static int do_proc_dointvec_minmax_conv(bool *negp, unsigned long *lvalp,
 	if (write) {
 		int val;
 		if (*negp) {
-			if (*lvalp > (unsigned long) INT_MAX + 1)
+			if (*lvalp > (unsigned long)INT_MAX + 1)
 				return -EINVAL;
 			val = -*lvalp;
 		} else {
-			if (*lvalp > (unsigned long) INT_MAX)
+			if (*lvalp > (unsigned long)INT_MAX)
 				return -EINVAL;
 			val = *lvalp;
 		}
