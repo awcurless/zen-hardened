@@ -137,7 +137,7 @@ static int __maybe_unused two __read_only = 2;
 static int __maybe_unused four __read_only = 4;
 static unsigned long zero_ul __read_only = 0;
 static unsigned long one_ul __read_only = 1;
-static unsigned long long_max = LONG_MAX;
+static unsigned long long_max __read_only = LONG_MAX;
 static int one_hundred __read_only = 100;
 static int one_thousand __read_only = 1000;
 
