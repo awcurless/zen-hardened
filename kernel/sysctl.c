@@ -171,7 +171,7 @@ static const int cap_last_cap = CAP_LAST_CAP;
  * and hung_task_check_interval_secs
  */
 #ifdef CONFIG_DETECT_HUNG_TASK
-static unsigned long hung_task_timeout_max __read_only = (LONG_MAX / HZ);
+static unsigned long hung_task_timeout_max __read_only = (LONG_MAX/HZ);
 #endif
 
 int device_sidechannel_restrict __read_mostly = 1;
@@ -293,41 +293,43 @@ int sysctl_legacy_va_layout;
 
 /* The default sysctl tables: */
 
-static struct ctl_table sysctl_base_table[] = { {
-							.procname = "kernel",
-							.mode = 0555,
-							.child = kern_table,
-						},
-						{
-							.procname = "vm",
-							.mode = 0555,
-							.child = vm_table,
-						},
-						{
-							.procname = "fs",
-							.mode = 0555,
-							.child = fs_table,
-						},
-						{
-							.procname = "debug",
-							.mode = 0555,
-							.child = debug_table,
-						},
-						{
-							.procname = "dev",
-							.mode = 0555,
-							.child = dev_table,
-						},
-						{} };
+static struct ctl_table sysctl_base_table[] = {
+	{
+		.procname	= "kernel",
+		.mode		= 0555,
+		.child		= kern_table,
+	},
+	{
+		.procname	= "vm",
+		.mode		= 0555,
+		.child		= vm_table,
+	},
+	{
+		.procname	= "fs",
+		.mode		= 0555,
+		.child		= fs_table,
+	},
+	{
+		.procname	= "debug",
+		.mode		= 0555,
+		.child		= debug_table,
+	},
+	{
+		.procname	= "dev",
+		.mode		= 0555,
+		.child		= dev_table,
+	},
+	{ }
+};
 
-#if defined(CONFIG_SCHED_DEBUG) && !defined(CONFIG_SCHED_MUQSS)
-static int min_sched_granularity_ns __read_only = 100000; /* 100 usecs */
-static int max_sched_granularity_ns __read_only = NSEC_PER_SEC; /* 1 second */
-static int min_wakeup_granularity_ns __read_only; /* 0 usecs */
-static int max_wakeup_granularity_ns __read_only = NSEC_PER_SEC; /* 1 second */
-#ifdef CONFIG_SMP static int min_sched_tunable_scaling __read_only =
-SCHED_TUNABLESCALING_NONE;
-static int max_sched_tunable_scaling __read_only = SCHED_TUNABLESCALING_END - 1;
+#ifdef CONFIG_SCHED_DEBUG
+static int min_sched_granularity_ns __read_only = 100000;		/* 100 usecs */
+static int max_sched_granularity_ns __read_only = NSEC_PER_SEC;	/* 1 second */
+static int min_wakeup_granularity_ns __read_only;			/* 0 usecs */
+static int max_wakeup_granularity_ns __read_only = NSEC_PER_SEC;	/* 1 second */
+#ifdef CONFIG_SMP
+static int min_sched_tunable_scaling __read_only = SCHED_TUNABLESCALING_NONE;
+static int max_sched_tunable_scaling __read_only = SCHED_TUNABLESCALING_END-1;
 #endif /* CONFIG_SMP */
 #endif /* CONFIG_SCHED_DEBUG */
 
