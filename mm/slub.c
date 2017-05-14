@@ -4908,8 +4908,7 @@ enum slab_stat_type {
 #define SO_TOTAL (1 << SL_TOTAL)
 
 #ifdef CONFIG_MEMCG
-static bool memcg_sysfs_enabled __ro_after_init =
-	IS_ENABLED(CONFIG_SLUB_MEMCG_SYSFS_ON);
+static bool memcg_sysfs_enabled __ro_after_init = IS_ENABLED(CONFIG_SLUB_MEMCG_SYSFS_ON);
 
 static int __init setup_slub_memcg_sysfs(char *str)
 {
