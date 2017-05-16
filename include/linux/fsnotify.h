@@ -246,6 +246,11 @@ static inline void fsnotify_rmdir(struct inode *dir, struct dentry *dentry)
  */
 static inline void fsnotify_access(struct file *file)
 {
+	struct inode *inode = file_inode(file);
+
+	if (is_sidechannel_device(inode))
+		return;
+
 	fsnotify_file(file, FS_ACCESS);
 }
 
@@ -254,6 +259,11 @@ static inline void fsnotify_access(struct file *file)
  */
 static inline void fsnotify_modify(struct file *file)
 {
+	struct inode *inode = file_inode(file);
+
+	if (is_sidechannel_device(inode))
+		return;
+
 	fsnotify_file(file, FS_MODIFY);
 }
 
