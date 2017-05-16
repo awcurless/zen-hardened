@@ -165,6 +165,9 @@ static const int cap_last_cap = CAP_LAST_CAP;
 static unsigned long hung_task_timeout_max __read_only = (LONG_MAX / HZ);
 #endif
 
+int device_sidechannel_restrict __read_mostly = 1;
+EXPORT_SYMBOL(device_sidechannel_restrict);
+
 #ifdef CONFIG_INOTIFY_USER
 #include <linux/inotify.h>
 #endif
@@ -308,9 +311,8 @@ static struct ctl_table sysctl_base_table[] = { {
 						},
 						{} };
 
-#if defined(CONFIG_SCHED_DEBUG) && !defined(CONFIG_SCHED_MUQSS) 
-static int min_sched_granularity_ns __read_only =
-	100000; /* 100 usecs */
+#if defined(CONFIG_SCHED_DEBUG) && !defined(CONFIG_SCHED_MUQSS)
+static int min_sched_granularity_ns __read_only = 100000; /* 100 usecs */
 static int max_sched_granularity_ns __read_only = NSEC_PER_SEC; /* 1 second */
 static int min_wakeup_granularity_ns __read_only; /* 0 usecs */
 static int max_wakeup_granularity_ns __read_only = NSEC_PER_SEC; /* 1 second */
@@ -541,11 +543,11 @@ static struct ctl_table kern_table[] = {
 #endif
 #ifdef CONFIG_USER_NS
 	{
-		.procname	= "unprivileged_userns_clone",
-		.data		= &unprivileged_userns_clone,
-		.maxlen		= sizeof(int),
-		.mode		= 0644,
-		.proc_handler	= proc_dointvec,
+		.procname = "unprivileged_userns_clone",
+		.data = &unprivileged_userns_clone,
+		.maxlen = sizeof(int),
+		.mode = 0644,
+		.proc_handler = proc_dointvec,
 	},
 #endif
 #ifdef CONFIG_PROC_SYSCTL
@@ -897,6 +899,15 @@ static struct ctl_table kern_table[] = {
 		.extra2 = &two,
 	},
 #endif
+	{
+		.procname = "device_sidechannel_restrict",
+		.data = &device_sidechannel_restrict,
+		.maxlen = sizeof(int),
+		.mode = 0644,
+		.proc_handler = proc_dointvec_minmax_sysadmin,
+		.extra1 = &zero,
+		.extra2 = &one,
+	},
 	{
 		.procname = "ngroups_max",
 		.data = &ngroups_max,
