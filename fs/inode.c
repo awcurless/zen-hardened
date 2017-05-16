@@ -55,6 +55,9 @@
  *   inode_hash_lock
  */
 
+/* sysctl */
+int device_sidechannel_restrict __read_mostly = 1;
+
 static unsigned int i_hash_mask __read_mostly;
 static unsigned int i_hash_shift __read_mostly;
 static struct hlist_head *inode_hashtable __read_mostly;
