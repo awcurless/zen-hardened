@@ -3544,15 +3544,26 @@ static inline struct sock *io_uring_get_socket(struct file *file)
 #endif
 
 int vfs_ioc_setflags_prepare(struct inode *inode, unsigned int oldflags,
-			     unsigned int flags);
+                         unsigned int flags);
 
 int vfs_ioc_fssetxattr_check(struct inode *inode, const struct fsxattr *old_fa,
-			     struct fsxattr *fa);
+                         struct fsxattr *fa);
 
 static inline void simple_fill_fsxattr(struct fsxattr *fa, __u32 xflags)
 {
-	memset(fa, 0, sizeof(*fa));
-	fa->fsx_xflags = xflags;
+        memset(fa, 0, sizeof(*fa));
+            fa->fsx_xflags = xflags;
+}
+
+extern int device_sidechannel_restrict;
+
+static inline bool is_sidechannel_device(const struct inode *inode)
+{
+	umode_t mode;
+	if (!device_sidechannel_restrict)
+		return false;
+	mode = inode->i_mode;
+	return ((S_ISCHR(mode) || S_ISBLK(mode)) && (mode & (S_IROTH | S_IWOTH)));
 }
 
 #endif /* _LINUX_FS_H */
