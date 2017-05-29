@@ -925,15 +925,16 @@ static struct ctl_table kern_table[] = {
 	},
 #endif
 #if defined CONFIG_TTY
-	{
-		.procname = "tiocsti_restrict",
-		.data = &tiocsti_restrict,
-		.maxlen = sizeof(int),
-		.mode = 0644,
-		.proc_handler = proc_dointvec_minmax_sysadmin,
-		.extra1 = &zero,
-		.extra2 = &one,
-	},
+	  {
+		.procname	= "tiocsti_restrict",
+		.data		= &tiocsti_restrict,
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec_minmax_sysadmin,
+		.extra1		= &zero,
+		.extra2		= &one,
+	  },
+#endif
 #if IS_ENABLED(CONFIG_USB)
 	{
 		.procname = "deny_new_usb",
