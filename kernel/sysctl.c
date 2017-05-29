@@ -1006,6 +1006,17 @@ static struct ctl_table kern_table[] = {
 		.extra2		= &one,
 	},
 #endif
+#if defined CONFIG_TTY
+	  {
+		.procname	= "tiocsti_restrict",
+		.data		= &tiocsti_restrict,
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec_minmax_sysadmin,
+		.extra1		= &zero,
+		.extra2		= &one,
+	  },
+#endif
 	{
 		.procname	= "device_sidechannel_restrict",
 		.data		= &device_sidechannel_restrict,
