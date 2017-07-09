@@ -35,8 +35,9 @@ static int vmlinux_section_warnings = 1;
 static int warn_unresolved = 0;
 /* How a symbol is exported */
 static int sec_mismatch_count = 0;
-static int sec_mismatch_fatal = 0;
 static int writable_fptr_count = 0;
+static int sec_mismatch_verbose = 1;
+static int sec_mismatch_fatal = 0;
 static int writable_fptr_verbose = 0;
 /* ignore missing files */
 static int ignore_missing_files;
@@ -1420,6 +1421,8 @@ static void report_sec_mismatch(const char *modname,
 	} else {
 		sec_mismatch_count++;
 	}
+	if (!sec_mismatch_verbose)
+		return;
 
 	get_pretty_name(from_is_func, &from, &from_p);
 	get_pretty_name(to_is_func, &to, &to_p);
@@ -1542,10 +1545,12 @@ static void report_sec_mismatch(const char *modname,
 		      "we should never get here.");
 		break;
 	case DATA_TO_TEXT:
+#if 0
 		fprintf(stderr,
 		"The %s %s:%s references\n"
 		"the %s %s:%s%s\n",
 		from, fromsec, fromsym, to, tosec, tosym, to_p);
+#endif
 		break;
 	}
 	fprintf(stderr, "\n");
