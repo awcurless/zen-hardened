@@ -122,6 +122,7 @@
 #else
 #define ELF_ET_DYN_BASE		0x100000000UL
 #endif /* CONFIG_ARM64_FORCE_52BIT */
+
 #ifndef __ASSEMBLY__
 
 #include <linux/bug.h>
