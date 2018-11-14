@@ -79,6 +79,7 @@ config ZEN_INTERACTIVE
 config SCHED_MUQSS
 	bool "MuQSS cpu scheduler"
 	select HIGH_RES_TIMERS
+	default n
 	---help---
 	  The Multiple Queue Skiplist Scheduler for excellent interactivity and
 	  responsiveness on the desktop and highly scalable deterministic
