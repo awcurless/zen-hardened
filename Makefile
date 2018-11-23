@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: GPL-2.0
 VERSION = 4
 PATCHLEVEL = 19
-SUBLEVEL = 2
-EXTRAVERSION = -zen1
+SUBLEVEL = 3
+EXTRAVERSION = -h1
 NAME = Neo Mir
 
 # *DOCUMENTATION*
@@ -702,6 +702,9 @@ stackp-flags-$(CONFIG_STACKPROTECTOR_STRONG)      := -fstack-protector-strong
 KBUILD_CFLAGS += $(stackp-flags-y)
 
 ifeq ($(cc-name),clang)
+ifdef CONFIG_LOCAL_INIT
+KBUILD_CFLAGS   += -fsanitize=local-init
+endif
 KBUILD_CPPFLAGS += $(call cc-option,-Qunused-arguments,)
 KBUILD_CFLAGS += $(call cc-disable-warning, format-invalid-specifier)
 KBUILD_CFLAGS += $(call cc-disable-warning, gnu)
