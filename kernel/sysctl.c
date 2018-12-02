@@ -315,7 +315,6 @@ static struct ctl_table sysctl_base_table[] = {
 };
 
 #if defined(CONFIG_SCHED_DEBUG) && !defined(CONFIG_SCHED_MUQSS)
-#ifdef CONFIG_SCHED_DEBUG
 static int min_sched_granularity_ns __read_only = 100000;		/* 100 usecs */
 static int max_sched_granularity_ns __read_only = NSEC_PER_SEC;	/* 1 second */
 static int min_wakeup_granularity_ns __read_only;			/* 0 usecs */
