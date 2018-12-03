@@ -84,6 +84,7 @@ config SCHED_MUQSS
 	  The Multiple Queue Skiplist Scheduler for excellent interactivity and
 	  responsiveness on the desktop and highly scalable deterministic
 	  low latency on any hardware.
+
           Say Y here.
 
 config BROKEN
