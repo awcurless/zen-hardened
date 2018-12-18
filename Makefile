@@ -2,8 +2,8 @@
 VERSION = 4
 PATCHLEVEL = 19
 SUBLEVEL = 10
-EXTRAVERSION = -zen
-NAME = Neo Mir
+EXTRAVERSION =
+NAME = "People's Front"
 
 # *DOCUMENTATION*
 # To see a list of typical targets execute "make help"
@@ -702,6 +702,9 @@ stackp-flags-$(CONFIG_STACKPROTECTOR_STRONG)      := -fstack-protector-strong
 KBUILD_CFLAGS += $(stackp-flags-y)
 
 ifeq ($(cc-name),clang)
+ifdef CONFIG_LOCAL_INIT
+KBUILD_CFLAGS   += -fsanitize=local-init
+endif
 KBUILD_CPPFLAGS += $(call cc-option,-Qunused-arguments,)
 KBUILD_CFLAGS += $(call cc-disable-warning, format-invalid-specifier)
 KBUILD_CFLAGS += $(call cc-disable-warning, gnu)
