@@ -555,6 +555,15 @@ static struct ctl_table kern_table[] = {
 		.proc_handler = proc_dointvec,
 	},
 #endif
+#ifdef CONFIG_USER_NS
+	{
+		.procname = "unprivileged_userns_clone",
+		.data = &unprivileged_userns_clone,
+		.maxlen = sizeof(int),
+		.mode = 0644,
+		.proc_handler = proc_dointvec,
+	},
+#endif
 #ifdef CONFIG_PROC_SYSCTL
 	{
 		.procname = "tainted",
@@ -905,15 +914,15 @@ static struct ctl_table kern_table[] = {
 	},
 #endif
 #if defined CONFIG_TTY
-	  {
-		.procname	= "tiocsti_restrict",
-		.data		= &tiocsti_restrict,
-		.maxlen		= sizeof(int),
-		.mode		= 0644,
-		.proc_handler	= proc_dointvec_minmax_sysadmin,
-		.extra1		= &zero,
-		.extra2		= &one,
-	  },
+	{
+		.procname = "tiocsti_restrict",
+		.data = &tiocsti_restrict,
+		.maxlen = sizeof(int),
+		.mode = 0644,
+		.proc_handler = proc_dointvec_minmax_sysadmin,
+		.extra1 = &zero,
+		.extra2 = &one,
+	},
 #endif
 	{
 		.procname = "device_sidechannel_restrict",
@@ -926,13 +935,44 @@ static struct ctl_table kern_table[] = {
 	},
 #if IS_ENABLED(CONFIG_USB)
 	{
-		.procname	= "deny_new_usb",
-		.data		= &deny_new_usb,
-		.maxlen		= sizeof(int),
-		.mode		= 0644,
-		.proc_handler	= proc_dointvec_minmax_sysadmin,
-		.extra1		= &zero,
-		.extra2		= &one,
+		.procname = "deny_new_usb",
+		.data = &deny_new_usb,
+		.maxlen = sizeof(int),
+		.mode = 0644,
+		.proc_handler = proc_dointvec_minmax_sysadmin,
+		.extra1 = &zero,
+		.extra2 = &one,
+	},
+#endif
+#if defined CONFIG_TTY
+	{
+		.procname = "tiocsti_restrict",
+		.data = &tiocsti_restrict,
+		.maxlen = sizeof(int),
+		.mode = 0644,
+		.proc_handler = proc_dointvec_minmax_sysadmin,
+		.extra1 = &zero,
+		.extra2 = &one,
+	},
+#endif
+	{
+		.procname = "device_sidechannel_restrict",
+		.data = &device_sidechannel_restrict,
+		.maxlen = sizeof(int),
+		.mode = 0644,
+		.proc_handler = proc_dointvec_minmax_sysadmin,
+		.extra1 = &zero,
+		.extra2 = &one,
+	},
+#if IS_ENABLED(CONFIG_USB)
+	{
+		.procname = "deny_new_usb",
+		.data = &deny_new_usb,
+		.maxlen = sizeof(int),
+		.mode = 0644,
+		.proc_handler = proc_dointvec_minmax_sysadmin,
+		.extra1 = &zero,
+		.extra2 = &one,
 	},
 #endif
 	{
