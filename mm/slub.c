@@ -126,8 +126,7 @@ static inline int kmem_cache_debug(struct kmem_cache *s)
 
 static inline bool has_sanitize(struct kmem_cache *s)
 {
-	return IS_ENABLED(CONFIG_SLAB_SANITIZE) &&
-	       !(s->flags & (SLAB_TYPESAFE_BY_RCU | SLAB_POISON));
+	return IS_ENABLED(CONFIG_SLAB_SANITIZE) && !(s->flags & (SLAB_TYPESAFE_BY_RCU | SLAB_POISON));
 }
 
 static inline bool has_sanitize_verify(struct kmem_cache *s)
@@ -3055,8 +3054,7 @@ static __always_inline void do_slab_free(struct kmem_cache *s,
 
 			if (sanitize) {
 				memset(x + offset, 0, s->object_size - offset);
-				if (!IS_ENABLED(CONFIG_SLAB_SANITIZE_VERIFY) &&
-				    s->ctor)
+				if (!IS_ENABLED(CONFIG_SLAB_SANITIZE_VERIFY) && s->ctor)
 					s->ctor(x);
 			}
 			if (x == tail_obj)
@@ -4905,8 +4903,7 @@ enum slab_stat_type {
 #define SO_TOTAL (1 << SL_TOTAL)
 
 #ifdef CONFIG_MEMCG
-static bool memcg_sysfs_enabled __ro_after_init =
-	IS_ENABLED(CONFIG_SLUB_MEMCG_SYSFS_ON);
+static bool memcg_sysfs_enabled __ro_after_init = IS_ENABLED(CONFIG_SLUB_MEMCG_SYSFS_ON);
 
 static int __init setup_slub_memcg_sysfs(char *str)
 {
