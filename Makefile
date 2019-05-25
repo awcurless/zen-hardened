@@ -2,7 +2,7 @@
 VERSION = 5
 PATCHLEVEL = 1
 SUBLEVEL = 9
-EXTRAVERSION = -zen
+EXTRAVERSION = -zen-hardened
 NAME = Chainsaw Slalom
 
 # *DOCUMENTATION*
