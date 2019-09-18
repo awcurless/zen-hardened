@@ -2,7 +2,7 @@
 VERSION = 5
 PATCHLEVEL = 3
 SUBLEVEL = 0
-EXTRAVERSION = -zen-hardened
+EXTRAVERSION = -2-zen-hardened
 NAME = The Beauty and the Bug
 
 # *DOCUMENTATION*
