@@ -2,7 +2,7 @@
 VERSION = 5
 PATCHLEVEL = 4
 SUBLEVEL = 7
-EXTRAVERSION = -zen
+EXTRAVERSION = -zen-hardened
 NAME = Pudding River
 
 # *DOCUMENTATION*
