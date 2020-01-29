@@ -2,7 +2,7 @@
 VERSION = 5
 PATCHLEVEL = 5
 SUBLEVEL = 1
-EXTRAVERSION = -zen
+EXTRAVERSION = -zen-hardened
 NAME = Scrolljazz
 
 # *DOCUMENTATION*
