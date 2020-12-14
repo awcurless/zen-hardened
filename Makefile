@@ -1,9 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0
 VERSION = 5
 PATCHLEVEL = 10
-SUBLEVEL = 0
-EXTRAVERSION = -zen
-NAME = Tea Storm
+SUBLEVEL = 1
+EXTRAVERSION = 
+NAME = Kleptomaniac Octopus
 
 # *DOCUMENTATION*
 # To see a list of typical targets execute "make help"
