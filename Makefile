@@ -2,8 +2,8 @@
 VERSION = 5
 PATCHLEVEL = 10
 SUBLEVEL = 14
-EXTRAVERSION = -zen
-NAME = Tea Storm
+EXTRAVERSION = -zen-hardened
+NAME = Kleptomaniac Octopus
 
 # *DOCUMENTATION*
 # To see a list of typical targets execute "make help"
