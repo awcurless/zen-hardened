@@ -2,7 +2,7 @@
 VERSION = 5
 PATCHLEVEL = 12
 SUBLEVEL = 1
-EXTRAVERSION = -zen
+EXTRAVERSION = -zen-hardened
 NAME = Crossing the Sliðr
 
 # *DOCUMENTATION*
